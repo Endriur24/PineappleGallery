@@ -39,11 +39,18 @@ export const cache = () => {
         return originalResponse;
       }
 
+      // Read expire date from response header (upcoming publication)
+      const cacheExpire = originalResponse.headers.get("X-KV-Cache-Expires");
+      let options;
+      if (cacheExpire) {
+        options = {
+          expiration: new Date(cacheExpire) / 1000,
+        };
+      }
+
       // Cache the successful response
       const content = await originalResponse.text();
-      c.executionCtx.waitUntil(
-        c.env.CACHE_KV.put(cacheKey, content)
-      );
+      c.executionCtx.waitUntil(c.env.CACHE_KV.put(cacheKey, content, options));
 
       // Replace original response with one containing cache headers
       c.res = createResponse(content, false, lang, cacheKey);

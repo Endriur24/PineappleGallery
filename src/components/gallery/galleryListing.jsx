@@ -1,9 +1,17 @@
 import { Layout } from "./layout";
-import { getGalleriesFromD1wGalleryIsPublic } from "../../utils/db";
+import {
+  getGalleriesFromD1wGalleryIsPublic,
+  upcomingPublicationDate,
+} from "../../utils/db";
 import { getImageWithTransforms } from "../../utils/galleryPath";
 
 export const main = async (c) => {
-  const galleriesResponse = await getGalleriesFromD1wGalleryIsPublic(c);
+  const [galleriesResponse, upcomingPublicationResponse] = await Promise.all([
+    getGalleriesFromD1wGalleryIsPublic(c),
+    upcomingPublicationDate(c),
+  ]);
+
+  const upcomingPublication = upcomingPublicationResponse?.results[0]?.PublicationDate ?? undefined;
 
   // in case of error or while initial run
   if (typeof galleriesResponse === "string") {
@@ -13,6 +21,9 @@ export const main = async (c) => {
 
   const { results: galleries } = galleriesResponse;
   const hasGalleries = galleries.length != 0;
+
+  // Append header with date for the upcoming publication date
+  c.header('X-KV-Cache-Expires', upcomingPublication)
 
   return c.html(
     <Layout

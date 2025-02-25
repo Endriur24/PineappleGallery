@@ -7,7 +7,7 @@ export const getGalleriesFromD1 = async (c) => {
 export const getGalleriesFromD1wGalleryIsPublic = async (c) => {
   try {
     // Attempt to fetch data from the Galleries table
-    const galleries = await c.env.DB.prepare('SELECT * FROM Galleries WHERE GalleryIsPublic = "TRUE" ORDER BY PartyDate DESC').all();
+    const galleries = await c.env.DB.prepare('SELECT * FROM Galleries WHERE GalleryIsPublic = "TRUE" AND (DATETIME(PublicationDate) <= DATETIME("now", "localtime")  OR PublicationDate = "") ORDER BY PartyDate DESC').all();
     return galleries;
   } catch (error) {
     console.error("Error fetching galleries:", error.message);
@@ -43,6 +43,10 @@ export const getGalleriesFromD1wGalleryIsPublic = async (c) => {
     }
   }
 };
+
+export const upcomingPublicationDate = async (c) => {
+  return await c.env.DB.prepare('SELECT PublicationDate FROM Galleries WHERE GalleryIsPublic = "TRUE" AND (DATETIME(PublicationDate) > DATETIME("now", "localtime")) ORDER BY PublicationDate ASC LIMIT 1').all();
+}
 
 export const updateGalleryOnD1 = async (c, formObject) => {
   return await c.env.DB.prepare(
