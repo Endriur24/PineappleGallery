@@ -134,11 +134,17 @@ export const GalleryForm = (props) => {
           />
         </label>
 
-        <label htmlFor="publicationDate">
+        <label htmlFor="publicationDateLocal">
           <i className="bi bi-calendar2-check"></i>
           {c.t("publication_date_label")}
           <input
             type="datetime-local"
+            name="PublicationDateLocal"
+            id="publicationDateLocal"
+            value=""
+          />
+          <input
+            type="hidden"
             name="PublicationDate"
             id="publicationDate"
             value={getValueForProperty("PublicationDate")}
@@ -193,7 +199,7 @@ export const GalleryForm = (props) => {
       </button>
 
       <div id="update_result"></div>
-
+      <script type="module" src="/static/js/localDate.js"></script>
       {isEditing ? (
         <script type="module" src="/static/js/singlegallery.js"></script>
       ) : (
