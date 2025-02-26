@@ -8,9 +8,12 @@ export const Layout = (props) => {
   const c = props.c;
   const renderBreadcrumb = (latest) => {
     if (latest != null && latest !== "admin_panel_breadcrumb") {
-      return `<li><a href="./">${c.t(
-        "admin_panel_breadcrumb"
-      )}</a></li><li>${latest}</li>`;
+      return `<li>
+                <a href="./">${c.t("admin_panel_breadcrumb")}</a>
+              </li>
+              <li>
+                ${latest}
+              </li>`;
     } else if (latest == null) {
       return null;
     }
@@ -30,42 +33,42 @@ export const Layout = (props) => {
         <title>${props.title}</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"></link>
         <link rel="stylesheet" href="${getPicoCSS(c)}" />
-        <link rel="stylesheet" href="/static/gallery.css" />
+        <link rel="stylesheet" href="/static/style.css" />
         <link rel="stylesheet" href="/static/admin.css" />
         <script src="https://unpkg.com/htmx.org@1.9.12"></script>
         ${(<HeadScripts />)}
       </head>
       <body>
-      <div class="container adminHeader">
-        <nav>
-        <ul>
-          <li><h1>${c.t("admin_panel_title")}</h1></li>
-        </ul>
-        <ul>
-        <li>
-          <a href=${makeURL(getGalleryPath(c))}>
-            ${c.t("public_view")}
-          </a>
-        </li>
-        <li>
-          <a
-            href=${makeURL(`${getGalleryPath(c)}admin/purge`)}>
-              ${c.t("purge-cache")}
-          </a>
-        </li>
-        <li>
-          <a
-            href=${makeURL(`${getGalleryPath(c)}admin`, "logout@")}>
-              ${c.t("logout")}
-            </a>
-        </li>
-        <li>
-        ${(<ThemeSwitcher c={c} />)}
-        </li>
-        </ul>
-        </nav><br />
-        ${
-          breadcrumb != null ? (
+      <div class="container">
+      	<nav role="menu">
+          <label data-role="burger"><input type="checkbox" /></label>
+          <ul role="menubar">
+            <li>
+              <h3 class="mb-2">${c.t("admin_panel_title")}</h3>
+            </li>
+            <li>
+              ${(<ThemeSwitcher c={c} />)}
+            </li>
+          </ul>
+          <ul role="menuitem">
+            <li>
+              <a href=${makeURL(getGalleryPath(c))}>
+                ${c.t("public_view")}
+              </a>
+            </li>
+            <li>
+              <a href=${makeURL(`${getGalleryPath(c)}admin/purge`)}>
+                ${c.t("purge-cache")}
+              </a>
+            </li>
+            <li>
+              <a href=${makeURL(`${getGalleryPath(c)}admin`, "logout@")}>
+                 ${c.t("logout")}
+              </a>
+            </li>
+          </ul>
+        </nav>
+        ${breadcrumb != null ? (
             <section class="breadcrumbs">
               <nav aria-label="breadcrumb">
                 <ul>

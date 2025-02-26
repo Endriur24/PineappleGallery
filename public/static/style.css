@@ -20,3 +20,7 @@ header h1 {
   text-transform: uppercase;
   letter-spacing: 2px;
 }
+
+#theme-switcher{
+  margin-bottom: 0;
+}

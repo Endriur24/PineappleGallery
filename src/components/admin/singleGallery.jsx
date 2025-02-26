@@ -41,7 +41,7 @@ const Singlegallery = (props) => {
         </fieldset>
       </article>
 
-      <article>
+      <article className="transparent-bg">
         <header className="w-button">
           <h3>{c.t("images_in_gallery_title")}</h3>
           <a hx-on:click="htmx.toggleClass(htmx.find('#uploader-wraper'), 'closed')" id="toggle-uploader-button">
