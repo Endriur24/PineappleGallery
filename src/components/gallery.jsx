@@ -7,6 +7,7 @@ import { handleGetImage } from "../utils/getImg";
 import { translationMiddleware } from "../utils/localeMiddleware";
 import { cache } from '../utils/cacheMiddleware';
 import { trimTrailingSlash } from 'hono/trailing-slash'
+import { passwordProtection } from '../utils/passwordMiddleware';
 
 
 export const gallery = new Hono({ strict: true });
@@ -43,4 +44,5 @@ gallery.route('/admin', admin);
 gallery.use('/*', cache());
 gallery.get("/", main);
 
+gallery.use('/:galleryTableName', passwordProtection());
 gallery.get("/:galleryTableName", handleGalleryRoute);

@@ -24,3 +24,21 @@ header h1 {
 #theme-switcher{
   margin-bottom: 0;
 }
+
+article.password {
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+.password-box-header {
+  padding: 8px 18px;
+  text-align: center;
+}
+
+form.password {
+  box-shadow: none !important;
+}
+
+strong.error {
+  color: red;
+}

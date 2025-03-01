@@ -73,5 +73,9 @@
   "all_files_deleted": "Usunięto wszystkie pliki",
   "current_thumb": "Obecna miniatura",
   "set_as_thumb": "Ustaw miniaturę",
-  "date_locale": "pl-PL"
+  "date_locale": "pl-PL",
+  "gallery_password_required": "Wymagane hasło",
+  "enter_password": "Wprowadź hasło",
+  "open_gallery": "Otwórz galerię",
+  "gallery_incorrect_password": "Nieprawidłowe hasło"
 }

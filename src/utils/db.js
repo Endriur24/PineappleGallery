@@ -35,6 +35,7 @@ export const getGalleriesFromD1wGalleryIsPublic = async (c) => {
       await c.env.DB.prepare(createTableSQL).run();
       // Create an index on the gallery table, for better storage and lookup optimization
       await c.env.DB.prepare(`CREATE INDEX IF NOT EXISTS idx_galleries_public ON Galleries(GalleryIsPublic)`).run();
+      await c.env.DB.prepare(`CREATE INDEX IF NOT EXISTS idx_galleries_password ON Galleries(Password)`).run();
 
       return "The Galleries table in database did not exist and has been created. Please reload the page and clean the cache.";
     } catch (createError) {
@@ -143,6 +144,12 @@ export const getIndywidualGalleryFromD1 = async (c, gallery) => {
   }
 
   return await c.env.DB.prepare(`SELECT * FROM ${gallery} ${orderByClause}`).all();
+};
+
+export const getGalleryPassword = async (c, galleryTableName) => {
+  return await c.env.DB.prepare(
+    "SELECT * FROM Galleries WHERE GalleryTableName = ?"
+  ).bind(galleryTableName).all();
 };
 
 export const getIndywidualGalleryFromD1wApproved = async (c, gallery) => {

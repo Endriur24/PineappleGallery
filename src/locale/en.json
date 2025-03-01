@@ -73,5 +73,9 @@
   "all_files_deleted": "All files deleted",
   "current_thumb": "Current Thumbnail",
   "set_as_thumb": "Set as Thumbnail",
-  "date_locale": "en-US"
+  "date_locale": "en-US",
+  "gallery_password_required": "Password is required",
+  "enter_password": "Enter password",
+  "open_gallery": "Open Gallery",
+  "gallery_incorrect_password": "Incorrect password"
 }
