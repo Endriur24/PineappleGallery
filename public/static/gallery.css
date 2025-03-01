@@ -1,3 +1,10 @@
+.gallery-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
 /* Gallery grid styles */
 .galleries-grid {
   display: grid;

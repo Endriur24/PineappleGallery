@@ -77,5 +77,6 @@
   "gallery_password_required": "Wymagane hasło",
   "enter_password": "Wprowadź hasło",
   "open_gallery": "Otwórz galerię",
-  "gallery_incorrect_password": "Nieprawidłowe hasło"
+  "gallery_incorrect_password": "Nieprawidłowe hasło",
+  "forget_gallery_password": "Zapomnij hasło"
 }

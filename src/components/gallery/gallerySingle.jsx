@@ -9,9 +9,12 @@ import { html } from "hono/html";
 export const Gallery = ({ gallery, images, c }) => (
   <Layout title={gallery.GalleryName} c={c} prefetch="single">
     <section>
-      <a href="./" class="secondary">
-        ← {c.t("back_link")}
-      </a>
+      <div className="gallery-controls">
+        <a href="./" className="secondary">
+          ← {c.t("back_link")}
+        </a>
+        {gallery.Password && <a href={gallery.GalleryTableName + "/logout"} className="secondary">{c.t("forget_gallery_password")}</a>}
+      </div>
       <div className="gallery-info">
         <h1 className="gallery-title">{gallery.GalleryName}</h1>
         {gallery.PartyDate && <small>{gallery.PartyDate}</small>}

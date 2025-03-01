@@ -178,7 +178,6 @@ The gallery can be mounted on any path by adjusting both `index.jsx` and `wrangl
 
 ## To do
 
-- gallery password protection
 - displaying location
 - images approval system
 - client side js translations

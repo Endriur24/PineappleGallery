@@ -8,6 +8,7 @@ import { translationMiddleware } from "../utils/localeMiddleware";
 import { cache } from '../utils/cacheMiddleware';
 import { trimTrailingSlash } from 'hono/trailing-slash'
 import { passwordProtection } from '../utils/passwordMiddleware';
+import { handleLogout } from '../utils/logoutHandler';
 
 
 export const gallery = new Hono({ strict: true });
@@ -44,5 +45,6 @@ gallery.route('/admin', admin);
 gallery.use('/*', cache());
 gallery.get("/", main);
 
+gallery.get('/:galleryTableName/logout', handleLogout);
 gallery.use('/:galleryTableName', passwordProtection());
 gallery.get("/:galleryTableName", handleGalleryRoute);

@@ -77,5 +77,6 @@
   "gallery_password_required": "Password is required",
   "enter_password": "Enter password",
   "open_gallery": "Open Gallery",
-  "gallery_incorrect_password": "Incorrect password"
+  "gallery_incorrect_password": "Incorrect password",
+  "forget_gallery_password": "Forget Password"
 }
