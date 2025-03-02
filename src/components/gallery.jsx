@@ -13,6 +13,8 @@ import { handleLogout } from '../utils/logoutHandler';
 
 export const gallery = new Hono({ strict: true });
 
+gallery.get("/img/:p1/:p2/:p3", handleGetImage);
+
 // Serve static files from dist directory -> put files into public/static
 gallery.use('/static/*', serveStatic({ root: './dist' }));
 
@@ -27,24 +29,19 @@ staticFileServe.forEach((item) => {
 // galleryly the translation middleware to all routes
 gallery.use('*', translationMiddleware);
 
-gallery.get("/img/:p1/:p2/:p3", handleGetImage);
-
 gallery.use('/admin/', trimTrailingSlash())
 gallery.route('/admin', admin);
 
-gallery.use('/*', cache());
-
-// Handle image lookups
-gallery.get("/img/:p1/:p2/:p3", handleGetImage);
-
-// Fix up admin paths properly
-gallery.use('/admin/', trimTrailingSlash());
-gallery.route('/admin', admin);
-
 // Main application interface
-gallery.use('/*', cache());
+gallery.use('/', cache());
 gallery.get("/", main);
 
+// Handle gallery logout - before cache
 gallery.get('/:galleryTableName/logout', handleLogout);
+
+// Password protection middleware
 gallery.use('/:galleryTableName', passwordProtection());
+
+
+gallery.use('/:galleryTableName', cache());
 gallery.get("/:galleryTableName", handleGalleryRoute);

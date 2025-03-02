@@ -12,22 +12,17 @@ export const passwordProtection = () => {
     if (c.req.method === "GET") {
       const storedPassword = getCookie(c, `gallery_pwd_${galleryTableName}`);
 
-      // Query resources in parallel
-      const galleryPromise = getGalleryPassword(c, galleryTableName);
-      const responsePromise = next();
-
-      // While the route handler is running, check if password is needed
-      const { results: galleries } = await galleryPromise;
+      const { results: galleries } = await getGalleryPassword(c, galleryTableName);
       const gallery = galleries?.[0];
 
       // If no gallery found or no password required - return the original response
       if (!gallery || !gallery.Password) {
-        return await responsePromise;
+        return await next();
       }
 
       // If cookie already contains the correct password, return the original response
       if (storedPassword === gallery.Password) {
-        return await responsePromise;
+        return await next();
       }
 
       // Show password prompt
