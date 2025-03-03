@@ -22,8 +22,8 @@ export const main = async (c) => {
   const { results: galleries } = galleriesResponse;
   const hasGalleries = galleries.length != 0;
 
-  // Append header with date for the upcoming publication date
-  c.header('X-KV-Cache-Expires', upcomingPublication)
+  // Append context with date for the upcoming publication date
+  c.set('KV-Cache-Expires', upcomingPublication)
 
   return c.html(
     <Layout

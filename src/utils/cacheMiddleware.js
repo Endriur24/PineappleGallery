@@ -39,8 +39,8 @@ export const cache = () => {
         return originalResponse;
       }
 
-      // Read expire date from response header (upcoming publication)
-      const cacheExpire = originalResponse.headers.get("X-KV-Cache-Expires");
+      // Read expire date from context (upcoming publication)
+      const cacheExpire = c.get("KV-Cache-Expires");
       let options;
       if (cacheExpire) {
         options = {
