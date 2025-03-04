@@ -10,30 +10,26 @@ export const passwordProtection = () => {
     }
 
     if (c.req.method === "GET") {
+      await next();
+      const galleryPassword = c.get("KV-Gallery-Password");
+      const galleryName = c.get("KV-Gallery-Name");
       const storedPassword = getCookie(c, `gallery_pwd_${galleryTableName}`);
 
-      const { results: galleries } = await getGalleryPassword(c, galleryTableName);
-      const gallery = galleries?.[0];
-
-      // If no gallery found or no password required - return the original response
-      if (!gallery || !gallery.Password) {
-        return await next();
-      }
-
       // If cookie already contains the correct password, return the original response
-      if (storedPassword === gallery.Password) {
-        return await next();
+      if (storedPassword === galleryPassword) {
+        return c.res;
       }
 
-      // Show password prompt
-      return c.html(
+      // Show password prompt overwriting response
+      c.res = new Response(
         <PasswordPrompt 
-          gallery={gallery} 
+          galleryName={galleryName}
           error={null} 
           c={c} 
         />,
-        401
+        { status: 401, headers: { "Content-Type": "text/html" } }
       );
+      return c.res;
     } else {
       try {
         const { results: galleries } = await getGalleryPassword(

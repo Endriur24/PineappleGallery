@@ -25,9 +25,11 @@ export const cache = () => {
       const cacheKey = `page:${new URL(c.req.url).pathname}@${lang}`;
 
       // Try to get cached content from KV
-      const cachedContent = await c.env.CACHE_KV.get(cacheKey);
+      const cachedContent = await c.env.CACHE_KV.getWithMetadata(cacheKey);
       if (cachedContent) {
-        return createResponse(cachedContent, true, lang, cacheKey);
+        c.set('KV-Gallery-Password', cachedContent.metadata.password);
+        c.set('KV-Gallery-Name', cachedContent.metadata.galleryName);
+        return createResponse(cachedContent.value, true, lang, cacheKey);
       }
 
       // If no cache, generate response
@@ -41,12 +43,14 @@ export const cache = () => {
 
       // Read expire date from context (upcoming publication)
       const cacheExpire = c.get("KV-Cache-Expires");
-      let options;
-      if (cacheExpire) {
-        options = {
-          expiration: new Date(cacheExpire) / 1000,
-        };
-      }
+      //read gallery password from context
+      const galleryPassword = c.get("KV-Gallery-Password");
+      const galleryName = c.get("KV-Gallery-Name");
+
+      const options = {
+        ...(cacheExpire && { expiration: new Date(cacheExpire).getTime() / 1000 }),
+        ...(galleryPassword && galleryName && { metadata: { password: galleryPassword, galleryName: galleryName} }),
+      };
 
       // Cache the successful response
       const content = await originalResponse.text();

@@ -1,14 +1,14 @@
 import { Layout } from "./layout";
 
-export const PasswordPrompt = ({ gallery, error, c }) => (
-  <Layout title={gallery.GalleryName} c={c}>
+export const PasswordPrompt = ({ galleryName, error, c }) => (
+  <Layout title={galleryName} c={c}>
     <section>
       <a href="./" class="secondary">
         ← {c.t("back_link")}
       </a>
       <article className="password">
         <div className="password-box-header">
-          <h1>{gallery.GalleryName}</h1>
+          <h1>{galleryName}</h1>
           <p>{c.t("gallery_password_required")}</p>
           {error && <strong className="error">{error}</strong>}
         </div>

@@ -84,6 +84,9 @@ export async function handleGalleryRoute(c) {
     c,
     galleryTableName
   );
+  // Append gallery password and name to context
+  c.set('KV-Gallery-Password', gallery.Password);
+  c.set('KV-Gallery-Name', gallery.GalleryName);
 
   return c.html(<Gallery gallery={gallery} images={images || []} c={c} />);
 }
