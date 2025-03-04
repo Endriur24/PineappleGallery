@@ -52,6 +52,7 @@ class MasonryLayout {
         if (placeholder) {
             placeholder.style.display = 'none';
         }
+        element.querySelector('.masonry-item-content').style.paddingBottom = '';
     }
 
     calculateColumns() {
