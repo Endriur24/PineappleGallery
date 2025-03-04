@@ -26,10 +26,11 @@ export const cache = () => {
 
       // Try to get cached content from KV
       const cachedContent = await c.env.CACHE_KV.getWithMetadata(cacheKey);
-      if (cachedContent) {
-        c.set('KV-Gallery-Password', cachedContent.metadata.password);
-        c.set('KV-Gallery-Name', cachedContent.metadata.galleryName);
-        return createResponse(cachedContent.value, true, lang, cacheKey);
+      if (cachedContent.value) {
+        c.set('KV-Gallery-Password', cachedContent.metadata?.password || undefined);
+        c.set('KV-Gallery-Name', cachedContent.metadata?.galleryName || undefined);  
+        c.res = createResponse(cachedContent.value, true, lang, cacheKey);
+        return c.res;
       }
 
       // If no cache, generate response

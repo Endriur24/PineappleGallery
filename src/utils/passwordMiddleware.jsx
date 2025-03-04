@@ -12,15 +12,15 @@ export const passwordProtection = () => {
     if (c.req.method === "GET") {
       await next();
       const galleryPassword = c.get("KV-Gallery-Password");
-      const galleryName = c.get("KV-Gallery-Name");
       const storedPassword = getCookie(c, `gallery_pwd_${galleryTableName}`);
-
-      // If cookie already contains the correct password, return the original response
-      if (storedPassword === galleryPassword) {
+      
+      // Return original response if no password set or cookie contains correct password
+      if (!galleryPassword || storedPassword === galleryPassword) {
         return c.res;
       }
 
       // Show password prompt overwriting response
+      const galleryName = c.get("KV-Gallery-Name");
       c.res = new Response(
         <PasswordPrompt 
           galleryName={galleryName}
