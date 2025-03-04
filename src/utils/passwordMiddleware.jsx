@@ -13,7 +13,7 @@ export const passwordProtection = () => {
       await next();
       const galleryPassword = c.get("KV-Gallery-Password");
       const storedPassword = getCookie(c, `gallery_pwd_${galleryTableName}`);
-      
+
       // Return original response if no password set or cookie contains correct password
       if (!galleryPassword || storedPassword === galleryPassword) {
         return c.res;
@@ -22,12 +22,8 @@ export const passwordProtection = () => {
       // Show password prompt overwriting response
       const galleryName = c.get("KV-Gallery-Name");
       c.res = new Response(
-        <PasswordPrompt 
-          galleryName={galleryName}
-          error={null} 
-          c={c} 
-        />,
-        { status: 401, headers: { "Content-Type": "text/html" } }
+        <PasswordPrompt galleryName={galleryName} error={null} c={c} />,
+        { status: 200, headers: { "Content-Type": "text/html" } }
       );
       return c.res;
     } else {
@@ -60,11 +56,20 @@ export const passwordProtection = () => {
           // If password is incorrect, show the password prompt again with an error message
           return c.html(
             <PasswordPrompt
-              gallery={gallery}
+              galleryName={gallery.GalleryName}
               error={c.t("gallery_incorrect_password")}
               c={c}
             />,
-            401
+            {
+              status: 200,
+              headers: {
+                "Content-Type": "text/html",
+                "Cache-Control":
+                  "no-store, no-cache, must-revalidate, max-age=0",
+                Pragma: "no-cache",
+                Expires: "0",
+              },
+            }
           );
         }
       } catch (error) {
