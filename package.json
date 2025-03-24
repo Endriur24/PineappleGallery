@@ -3,14 +3,15 @@
   "type": "module",
   "scripts": {
     "dev": "run-p dev:*",
-    "dev:wrangler": "wrangler types && wrangler pages dev dist --live-reload",
+    "dev:wrangler": "wrangler pages dev dist --live-reload",
     "dev:esbuild": "esbuild --bundle src/index.jsx --format=esm --watch --outfile=dist/_worker.js",
     "dev:static": "cpx \"public/**/*\" dist --watch",
     "build": "npm run clean && run-p build:*",
     "clean": "rimraf dist",
     "build:esbuild": "esbuild --bundle src/index.jsx --format=esm --outfile=dist/_worker.js",
     "build:static": "cpx \"public/**/*\" dist",
-    "deploy": "wrangler pages deploy"
+    "deploy": "wrangler pages deploy",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
     "accept-language-parser": "^1.5.0",
