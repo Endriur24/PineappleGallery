@@ -9,7 +9,8 @@
       "ESNext"
     ],
     "types": [
-        "@cloudflare/workers-types/2023-07-01"
+        "./worker-configuration.d.ts",
+        "node"
     ],
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx"

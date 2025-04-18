@@ -10,7 +10,8 @@
     "clean": "rimraf dist",
     "build:esbuild": "esbuild --bundle src/index.jsx --format=esm --outfile=dist/_worker.js",
     "build:static": "cpx \"public/**/*\" dist",
-    "deploy": "wrangler pages deploy"
+    "deploy": "wrangler pages deploy",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
     "accept-language-parser": "^1.5.0",
@@ -18,9 +19,9 @@
     "rimraf": "^6.0.1"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20241127.0",
+    "@types/node": "~20.17.0",
     "cpx2": "^8.0.0",
     "npm-run-all": "^4.1.5",
-    "wrangler": "^3.93.0"
+    "wrangler": "^4.4.0"
   }
 }
